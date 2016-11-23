@@ -1,0 +1,83 @@
+<?xml version="1.0"?><tsung loglevel="notice" version="1.0">
+
+  <clients>
+    <client host="localhost" use_controller_vm="true"/>
+  </clients>
+
+  <servers>
+  <server host="127.0.0.1" port="7410" type="tcp"/>
+ </servers>
+
+  <load>
+   <arrivalphase phase="1" duration="1" unit="minute">
+    <users interarrival="1" unit="second"/>
+   </arrivalphase>
+  </load>
+
+  <options>
+  <option type="ts_jabber" name="global_number" value="100"/>
+  <option type="ts_jabber" name="userid_max" value="10000"/>
+  <option type="ts_jabber" name="domain" value="mgoffan.com"/>
+  <option type="ts_jabber" name="username" value="user"/>
+  <option type="ts_jabber" name="passwd" value="pass"/>
+ </options>
+
+  <sessions>
+   <session probability="50" name="jabber-example" type="ts_jabber">
+
+    <request> <jabber type="connect" ack="no_ack"/> </request>
+    <thinktime value="2"/>
+    <transaction name="authenticate">
+      <request> <jabber type="auth_get" ack="local"/> </request>
+      <request> <jabber type="auth_set_plain" ack="local"/> </request>
+    </transaction>
+
+    <request> <jabber type="presence:initial" ack="no_ack"/> </request>
+    <thinktime value="2"/>
+
+    <transaction name="roster">
+      <request> <jabber type="iq:roster:get" ack="local"/></request>
+    </transaction>
+
+    <thinktime value="30"/>
+
+    <transaction name="online">
+    <request> <jabber type="chat" ack="no_ack" size="16" destination="online"/> </request>
+    </transaction>
+
+    <thinktime value="30"/>
+
+    <transaction name="offline">
+      <request> <jabber type="chat" ack="no_ack" size="56" destination="offline"/> </request>
+    </transaction>
+
+    <thinktime value="30"/>
+
+    <transaction name="close">
+      <request> <jabber type="close" ack="no_ack"/> </request>
+    </transaction>
+
+  </session>
+
+  <session probability="50" name="jabber-plain" type="ts_jabber">
+
+    <request> <jabber type="connect" ack="no_ack"/> </request>
+
+    <thinktime value="2"/> 
+
+    <transaction name="auth_plain">
+      <request> <jabber type="auth_get" ack="local"/> </request>
+      <request> <jabber type="auth_set_plain" ack="local"/> </request>
+    </transaction>
+
+    <thinktime value="30"/>
+
+    <transaction name="close">
+      <request> <jabber type="close" ack="no_ack"/> </request>
+    </transaction>
+
+  </session>
+
+
+ </sessions>
+</tsung>

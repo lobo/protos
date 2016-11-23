@@ -1,0 +1,11 @@
+Pasos de instalación:
+
+Ejecutar los siguientes comandos en la raíz del proyecto.
+
+1) `mvn clean package`
+2) `java -cp target/GLoboH-jar-with-dependencies.jar ar.edu.itba.pdc.Main`
+
+El documento utilizado para realizar la presentación en formato PDF [RFC3778] se puede ver en la raíz de este proyecto con el nombre `Presentacion.pdf`
+
+El documento utilizado para realizar el informe se puede ver en el siguiente link:
+https://www.sharelatex.com/project/580e80048bf1a2180632cc78
